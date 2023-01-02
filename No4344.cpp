@@ -1,7 +1,6 @@
 #include <iostream>
 #include <memory>
 #include <cmath>
-
 using namespace std;
 
 int main(){
