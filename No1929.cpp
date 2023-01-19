@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
@@ -7,6 +8,8 @@ int main() {
     cin >> min >> max;
 
     /*
+    // 방법 1. 모든 숫자를 방문해 2~자기자신/2 까지 나눠보기
+
     for (int i = min; i <= max; i++) {
         if (i == 1) continue;
         if (i == 2 || i == 3) {
@@ -22,7 +25,53 @@ int main() {
             if (j == i / 2) cout << i << "\n";
         }
     }
-    */ 
-    // 시간 초과. 반복문을 무대뽀로 돌면 안되는 걸까?
+    // 시간 초과. 반복문을 무작정 돌면 안되는 걸까?
+
+    // 방법 2. 2부터 max까지 돌면서 모든 숫자를 나눠보기
+
+    int num = max - min + 1;
+    unique_ptr<int[]> check{ new int[num] };
+
+    for (int i = 0; i < num; i++) check[i] = 0;
+
+    for (int div = 2; div < max; div++) {
+        for (int i = min; i <= max; i++) {
+            if (i != div && i % div == 0) {
+                check[i - min] = 1;
+            }
+        }
+    }
+
+    for (int i = 0; i < num; i++) {
+        if (check[i] == 0) cout << i + min << "\n";
+    }
+    // 이것도 시간 초과.
+    */
+
+    // 검색을 좀 해보았다... 소수의 특징에는 무엇이 있는가?
+    // => sqrt(n) (=루트n) 보다 작거나 같은 수로 나누어지지 않으면 n은 소수이다.
+    // 왜?
+    // 약수는 대칭적임. n이 a로 나누어짐과 동시에 n은 n/a으로 나누어짐.
+    // n이 x*y로 표현된다고 하면 x==y일 때 min(x,y)가 가장 큼
+
+    // 방법 3. 모든 숫자를 2부터 루트n까지 나눠본다.
+    /*
+    for (int i = min; i <= max; i++) {
+        if (i == 1) continue;
+        if (i == 2 || i == 3) {
+            cout << i << endl;
+            continue;
+        }
+        for (int j = 2; j <= sqrt(i); j++) {
+            if (i % j == 0) break;
+            if (j == floor(sqrt(i))) cout << i << endl;
+        }
+    }
+    */
+    // 반복문을 훨씬 덜 돌았다고 생각했는데 여전히 시간 초과
+
+    // 방법 4. 에라토스테네스의 체
+    // 사실 방법 2에서 구현하고 싶었던 건데, 코드 구현이 명확하지 못해서 과도하게 반복문을 돈 것 같다.
+    // 나누는 수, 즉 체 역할을 하는 수를 '선별'해야 한다
 
 }
