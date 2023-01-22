@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <memory>
 
 using namespace std;
 
@@ -73,5 +74,41 @@ int main() {
     // 방법 4. 에라토스테네스의 체
     // 사실 방법 2에서 구현하고 싶었던 건데, 코드 구현이 명확하지 못해서 과도하게 반복문을 돈 것 같다.
     // 나누는 수, 즉 체 역할을 하는 수를 '선별'해야 한다
+
+    /*
+    int key=1, j;
+    unique_ptr<int[]> check = make_unique<int[]>(max+1);
+
+    check[0] = 1;
+    check[1] = 1;
+    
+    if(max >= 2){
+        for(int i=2; i<max+1; i++){
+            check[i] = 0;
+        }
+    }
+
+    while(true){
+        for(j=key+1; j < max+1; j++){
+            if(check[j] == 0) {
+                key = j;
+                break;
+            }
+        }
+
+        if(j == max+1) break;
+        // key가 바뀌지 않았으면 남은 모든 수가 소수가 아니라는 뜻이므로 종료
+        
+        for(int i=key+1; i < max+1; i++){
+            if(check[i] == 0 && i % key == 0) check[i] = 1;
+            // check[i-key] != 0 이면 판단을 안해도 되기 때문에 앞에 썼다
+        }
+    }
+    
+    for(int i = min; i < max+1; i++){
+        if(check[i] == 0) cout << i << endl;
+    }
+    */
+   // 이것도 시간초과랜다... 너갱이가 나갔댄다
 
 }
