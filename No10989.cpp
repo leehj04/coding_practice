@@ -55,10 +55,15 @@ int main() {
 		counting[num[i]]++;
 	}
 
+	// 개수의 누적합을 저장
 	for (int i = 1; i < max; i++) {
 		counting[i] += counting[i - 1];
 	}
 
+	// 원 data에서 값을 뽑아서
+	// -> 누적된 counting을 보고 자리를 찾아서
+	// -> sorting result 에 자리 맞춰 집어 넣고
+	// -> counting은 하나 줄인다
 	for (int i = N - 1; i >= 0; i--) {
 		result[counting[num[i]] - 1] = num[i];
 		counting[num[i]]--;
@@ -69,4 +74,40 @@ int main() {
 	}
 	*/
 	// 메모리 초과
+
+	int N, max = 0, i;
+	cin >> N;
+	unique_ptr<int[]> data = make_unique<int[]>(N);
+	unique_ptr<int[]> sort = make_unique<int[]>(N);
+	for(i=0; i<N; i++){
+		cin >> data[i];
+		if(max < data[i]) max = data[i];
+	}
+	
+	unique_ptr<int[]> count = make_unique<int[]>(max+1);
+	for(i=0; i<max+1; i++){
+		count[i] = 0;
+	}
+
+	for(i=0; i<N;i++){
+		count[data[i]] += 1;
+	}
+
+	// 개수의 누적합을 저장
+	for(i=1; i<max+1; i++){
+		count[i] += count[i-1];
+	}
+
+	// 원 data에서 값을 뽑아서
+	// -> 누적된 counting을 보고 자리를 찾아서
+	// -> sort에 자리 맞춰 집어 넣고
+	// -> counting은 하나 줄인다 
+	for(i=N-1; i>=0; i--){
+		sort[count[data[i]]-1] = data[i];
+		count[data[i]] -= 1;
+	}
+
+	for(i=0; i<N; i++){
+		cout << sort[i] << "\n";
+	}
 }
