@@ -7,7 +7,6 @@ using namespace std;
 bool compare(vector<int>&, vector<int>&);
 
 int main() {
-
     int N;
     cin >> N;
     vector <vector<int>> num(N, vector<int>(2));
